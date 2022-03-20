@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
 import 'package:file_manager_app/pages/home.dart';
@@ -15,8 +17,9 @@ Future<List<String>> allPathInDir(String dir) async {
 
     List<FileSystemEntity> fl = await currDir.list().toList();
     for (var element in fl) {
-      if (GetStorageItems.canLoad)
+      if (GetStorageItems.canLoad) {
         allfiles.addAll(await allPathInDir(element.path));
+      }
     }
     allfiles.sort();
   }

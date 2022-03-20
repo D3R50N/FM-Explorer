@@ -31,18 +31,17 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-
-    syncAllPath().then((value) {
-      setState(() {
-        allPathLoaded = true;
+    reqPerm().then((value) {
+      syncAllPath().then((value) {
+        setState(() {
+          allPathLoaded = true;
+        });
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    reqPerm().then((value) => print("fini"));
-
     return Scaffold(
       backgroundColor: mainColor,
       appBar: HomeAppBar(),

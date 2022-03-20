@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names
 
 import 'dart:io';
 
@@ -6,12 +6,10 @@ import 'package:file_manager_app/future_func.dart';
 import 'package:file_manager_app/pages/internal_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:file_manager_app/contants.dart';
 
 class CategoryPage extends StatefulWidget {
-  CategoryPage(this.title, {Key? key}) : super(key: key);
+  const CategoryPage(this.title, {Key? key}) : super(key: key);
   final String title;
 
   @override

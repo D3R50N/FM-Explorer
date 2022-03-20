@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, non_constant_identifier_names
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, avoid_print, no_logic_in_create_state
 
 import 'dart:async';
 import 'dart:io';
@@ -12,7 +12,6 @@ import 'package:file_manager_app/widgets/items_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:gap/gap.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../contants.dart';
 import '../widgets/internal_storage_app_bar.dart';
@@ -60,8 +59,6 @@ class InternalStorage extends StatefulWidget {
   final double usedSpace;
   final double freeSpace;
   final String path;
-
-  List<FileSystemEntity> entities = [];
 
   // ignore: use_key_in_widget_constructors
   InternalStorage(
@@ -127,12 +124,10 @@ class InternalStorageState extends State<InternalStorage> {
 
       directory.list().toList().then(
         (value) {
-          value.forEach(
-            (element) {
-              allItems.add(element.toString());
-              m[path]?.add(element.toString());
-            },
-          );
+          for (var element in value) {
+            allItems.add(element.toString());
+            m[path]?.add(element.toString());
+          }
           ItemsCache.cached.addAll(m);
           // print("On a " + ItemsCache.cached.toString());
           allItems.sort();
@@ -149,7 +144,6 @@ class InternalStorageState extends State<InternalStorage> {
     //print(path);
     itemsList.clear();
     for (var element in allItems) {
-      int index = allItems.indexOf(element);
       String name = element
           .toString()
           .split(Platform.pathSeparator)
@@ -268,7 +262,9 @@ class InternalStorageState extends State<InternalStorage> {
   }
 
   void selectAll() {
-    itemsList.forEach((element) {});
+    // ignore: todo
+    // TODO Tout sélectionner
+    // for (var element in itemsList) {}
     print(allItems.length);
   }
 
@@ -333,6 +329,7 @@ class InternalStorageState extends State<InternalStorage> {
                       break;
 
                     case 2:
+                      // ignore: todo
                       //TODO ("Plus")
                       break;
                   }
@@ -376,6 +373,7 @@ class InternalStorageState extends State<InternalStorage> {
                       shareItem(selectedPath.last);
                       break;
                     case 3:
+                      // ignore: todo
                       //TODO ("Plus")
                       break;
                   }
