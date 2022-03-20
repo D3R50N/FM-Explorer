@@ -93,6 +93,7 @@ class _HomeState extends State<Home> {
                   const StorageSection(),
                   CategoriesSection(),
                   const RecentSection(),
+                  Gap(20),
                 ],
               ),
             ),

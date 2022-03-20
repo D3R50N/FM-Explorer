@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'package:file_manager_app/future_func.dart';
+import 'package:file_manager_app/helpers/items_cache.dart';
 import 'package:file_manager_app/pages/home.dart';
 import 'package:file_manager_app/widgets/header.dart';
 import 'package:file_manager_app/widgets/id_card_storage.dart';
@@ -42,6 +43,7 @@ String perfectSize(int sizeInBytes) {
 }
 
 String fileExt(String filename) {
+  if (!filename.contains(".")) return "";
   return filename.split(".").last;
 }
 
@@ -109,15 +111,30 @@ class InternalStorageState extends State<InternalStorage> {
   void pathList() {
     reqPerm().then((value) {
       allItems.clear();
+
+      List<String>? ls = ItemsCache.cached[path];
+      if (ls != null) {
+        allItems.addAll(ls);
+        allItems.sort();
+        initItemsList();
+        setState(() {
+          isItemsLoaded = true;
+        });
+        return;
+      }
       final directory = Directory(path);
+      Map<String, List<String>> m = {path: []};
 
       directory.list().toList().then(
         (value) {
           value.forEach(
             (element) {
               allItems.add(element.toString());
+              m[path]?.add(element.toString());
             },
           );
+          ItemsCache.cached.addAll(m);
+          // print("On a " + ItemsCache.cached.toString());
           allItems.sort();
           initItemsList();
           setState(() {
@@ -133,7 +150,12 @@ class InternalStorageState extends State<InternalStorage> {
     itemsList.clear();
     for (var element in allItems) {
       int index = allItems.indexOf(element);
-      String name = allItems[index].toString().split("/").last.split("'").first;
+      String name = element
+          .toString()
+          .split(Platform.pathSeparator)
+          .last
+          .split("'")
+          .first;
       Directory d = Directory(path + name);
       File f = File(path + name);
 
@@ -158,10 +180,18 @@ class InternalStorageState extends State<InternalStorage> {
     }
   }
 
+  void deleteCacheForPath() {
+    List<String>? ls = ItemsCache.cached[path];
+    if (ls != null) {
+      ItemsCache.cached.remove(path);
+    }
+  }
+
   void createFile(String name) {
     if (name.isEmpty) return;
     File f = File(path + name);
     f.createSync(recursive: true);
+    deleteCacheForPath();
     pathList();
     GetStorageItems.init();
   }
@@ -169,6 +199,7 @@ class InternalStorageState extends State<InternalStorage> {
   void createFolder(String name) {
     Directory d = Directory(path + name);
     d.createSync(recursive: true);
+    deleteCacheForPath();
     pathList();
     GetStorageItems.init();
   }
@@ -418,6 +449,8 @@ class InternalStorageState extends State<InternalStorage> {
                       ret = true;
                       setState(() {
                         Navigator.pop(context);
+                        deleteCacheForPath();
+
                         pathList();
                       });
                     },
@@ -453,6 +486,7 @@ class InternalStorageState extends State<InternalStorage> {
       setState(() {
         selectedPath = [];
         bottomShow = false;
+        deleteCacheForPath();
         pathList();
       });
     });
@@ -469,6 +503,7 @@ class InternalStorageState extends State<InternalStorage> {
         setState(() {
           selectedPath = [];
           bottomShow = false;
+          deleteCacheForPath();
 
           //pathList();
         });

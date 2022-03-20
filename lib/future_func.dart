@@ -24,6 +24,7 @@ Future<List<String>> allPathInDir(String dir) async {
     addUnique(element, GetStorageItems.getAll);
   }
   GetStorageItems.sortAll();
+  //Pour réduire le nombre de fichiers à charger
   if (GetStorageItems.length > 100) GetStorageItems.canLoad = false;
 
   return allfiles;

@@ -1,5 +1,11 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'dart:io';
+
 import 'package:file_manager_app/contants.dart';
 import 'package:file_manager_app/future_func.dart';
+import 'package:file_manager_app/pages/all_files_page.dart';
+import 'package:file_manager_app/pages/internal_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,9 +35,13 @@ class RecentSection extends StatelessWidget {
               Flexible(
                 child: TextButton(
                   onPressed: () {
-                    syncAllPath().then((value) {
-                      GetStorageItems.init();
-                    });
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return AllFiles("fichiers");
+                        },
+                      ),
+                    );
                   },
                   child: Text(
                     "Voir Tout",
@@ -50,51 +60,34 @@ class RecentSection extends StatelessWidget {
           children: [
             Gap(10),
             Expanded(
-              child: Column(
-                children: [
-                  recentFile(
-                    icondata: Icons.photo_library,
-                    color: col_pht,
-                    name: "andy.jpg",
-                    size: 0.5,
-                    date: "13 Nov. 2022",
-                  ),
-                  recentFile(
-                    icondata: Icons.video_library,
-                    color: col_vid,
-                    name: "SNK S4E04.mp4",
-                    size: 325,
-                    date: "13 Nov. 2022",
-                  ),
-                  recentFile(
-                    icondata: Icons.library_books,
-                    color: col_doc,
-                    name: "text.docx",
-                    size: 12.17,
-                    date: "13 Nov. 2022",
-                  ),
-                  recentFile(
-                    icondata: Icons.library_music,
-                    color: col_aud,
-                    name: "igp5.mp3",
-                    size: 2.3,
-                    date: "13 Nov. 2022",
-                  ),
-                  recentFile(
-                    icondata: Icons.archive,
-                    color: col_rch,
-                    name: "virus",
-                    size: 1,
-                    date: "13 Nov. 2022",
-                  ),
-                  recentFile(
-                    icondata: Icons.upload_file_rounded,
-                    color: col_zip,
-                    name: "game.zip",
-                    size: 10,
-                    date: "13 Nov. 2022",
-                  ),
-                ],
+              child: ListView.builder(
+                shrinkWrap: true,
+                padding: EdgeInsets.all(0),
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  List<String> sep = GetStorageItems.getAllFiles[index]
+                      .split(Platform.pathSeparator);
+                  String name = sep.last;
+                  String path = sep
+                          .sublist(0, sep.length - 1)
+                          .join(Platform.pathSeparator) +
+                      Platform.pathSeparator;
+                  File f = File(path + name);
+                  return FileCard(
+                    icondata:
+                        extAndIcon[fileExt(name)] ?? Icons.file_copy_rounded,
+                    parentPath: path,
+                    size: perfectSize(f.lengthSync()),
+                    lastDate: f.lastAccessedSync().toString().split(" ").first,
+                    color: extAndCol[fileExt(name)] ?? crgb(100, 100, 100),
+                    name: name,
+                    selectItem: (String s) {},
+                    onGoBack: (dynamic v) {},
+                    deselectItem: (String s) {},
+                    oneIsSelected: false,
+                  );
+                },
               ),
             ),
             Gap(10),

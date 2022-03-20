@@ -57,20 +57,17 @@ class _CategoryPageState extends State<CategoryPage> {
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         title: Text(
-          "Liste des " + widget.title.toLowerCase(),
+          "Liste des " +
+              widget.title.toLowerCase() +
+              " (" +
+              result_files.length.toString() +
+              ")",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 22,
             color: Colors.black,
           ),
         ),
-        actions: const [
-          CircleAvatar(
-            backgroundImage: AssetImage("images/img1.jpg"),
-            radius: 15,
-          ),
-          Gap(20),
-        ],
       ),
       body: isFound
           ? ListView.builder(
