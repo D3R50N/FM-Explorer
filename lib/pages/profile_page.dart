@@ -29,8 +29,8 @@ class _ProfilePageState extends State<ProfilePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 200,
-              height: 200,
+              width: 140,
+              height: 140,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100.0),
                 image: DecorationImage(
@@ -39,7 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 border: Border.all(
                   color: col_aud,
-                  width: 5,
+                  width: 4,
                 ),
               ),
             ),
@@ -62,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             "Max Andy",
                             style: GoogleFonts.nunito(
                               fontWeight: FontWeight.bold,
-                              fontSize: 22,
+                              // fontSize: 22,
                               color: crgb(30, 30, 50),
                             ),
                           ),
@@ -107,7 +107,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Text(
                         GetStorageItems.length.toString() + " éléments trouvés",
                         style: GoogleFonts.nunito(
-                          fontSize: 22,
+                          // fontSize: 22,
                           color: crgb(30, 30, 50),
                         ),
                       ),
@@ -142,7 +142,7 @@ Widget titleWidget({required String title}) {
             child: Text(
               title,
               style: GoogleFonts.nunito(
-                fontSize: 22,
+                fontSize: 17,
                 color: crgb(30, 30, 50),
               ),
             ),
@@ -154,7 +154,8 @@ Widget titleWidget({required String title}) {
               return ListTile(
                 subtitle: Text("Il y a 3 min"),
                 leading: Icon(Icons.history),
-                title: Text("Activité récente " + index.toString()),
+                title: Text("Activité récente " + index.toString(),
+                    style: GoogleFonts.nunito(fontSize: 15)),
               );
             },
             itemCount: 4,

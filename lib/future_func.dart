@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:file_manager_app/pages/home.dart';
 import 'package:file_manager_app/widgets/storage_section.dart';
 
 Future<List<String>> allPathInDir(String dir) async {
   List<String> allfiles = [dir];
+  await reqPerm();
 
   Directory currDir = Directory(dir);
   if (!currDir.existsSync()) {
@@ -22,7 +24,7 @@ Future<List<String>> allPathInDir(String dir) async {
     addUnique(element, GetStorageItems.getAll);
   }
   GetStorageItems.sortAll();
-  if (GetStorageItems.length > 60) GetStorageItems.canLoad = false;
+  if (GetStorageItems.length > 100) GetStorageItems.canLoad = false;
 
   return allfiles;
 }

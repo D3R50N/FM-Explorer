@@ -76,7 +76,6 @@ class _CategoryPageState extends State<CategoryPage> {
           ? ListView.builder(
               padding: EdgeInsets.all(0),
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
               itemCount: result_files.length,
               itemBuilder: (context, index) {
                 List<String> sep =

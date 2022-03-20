@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'package:file_manager_app/future_func.dart';
+import 'package:file_manager_app/pages/home.dart';
 import 'package:file_manager_app/widgets/header.dart';
 import 'package:file_manager_app/widgets/id_card_storage.dart';
 import 'package:file_manager_app/widgets/items_card.dart';
@@ -106,23 +107,25 @@ class InternalStorageState extends State<InternalStorage> {
   }
 
   void pathList() {
-    allItems.clear();
-    final directory = Directory(path);
+    reqPerm().then((value) {
+      allItems.clear();
+      final directory = Directory(path);
 
-    directory.list().toList().then(
-      (value) {
-        value.forEach(
-          (element) {
-            allItems.add(element.toString());
-          },
-        );
-        allItems.sort();
-        initItemsList();
-        setState(() {
-          isItemsLoaded = true;
-        });
-      },
-    );
+      directory.list().toList().then(
+        (value) {
+          value.forEach(
+            (element) {
+              allItems.add(element.toString());
+            },
+          );
+          allItems.sort();
+          initItemsList();
+          setState(() {
+            isItemsLoaded = true;
+          });
+        },
+      );
+    });
   }
 
   void initItemsList() {
