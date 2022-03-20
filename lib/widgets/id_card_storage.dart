@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:file_manager_app/contants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,8 +22,11 @@ class IDStorageCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.all(0),
-      color: Colors.white,
       elevation: 0.1,
+      color: componentColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.zero,
+      ),
       shadowColor: Colors.grey.shade100.withOpacity(.5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,7 +38,7 @@ class IDStorageCard extends StatelessWidget {
                 margin: EdgeInsets.only(left: 20, top: 10),
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Color.fromRGBO(253, 250, 249, 1),
+                  color: iconColor,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(
@@ -49,7 +55,7 @@ class IDStorageCard extends StatelessWidget {
                       title.length > 15 ? title.substring(0, 15) + ".." : title,
                       style: GoogleFonts.dmSans(
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: textColor,
                         fontSize: 20,
                       ),
                     ),
@@ -119,7 +125,9 @@ class IDStorageCard extends StatelessWidget {
                 child: LinearProgressIndicator(
                   backgroundColor: Colors.grey.shade500,
                   color: Color.fromRGBO(0, 195, 253, 1),
-                  value: usedSpace / (usedSpace + freeSpace),
+                  value: (usedSpace == 0 && freeSpace == 0)
+                      ? 0
+                      : usedSpace / (usedSpace + freeSpace),
                 ),
               ),
             ),

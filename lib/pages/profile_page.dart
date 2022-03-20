@@ -19,7 +19,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Hero(
       tag: "profile_page",
       child: Scaffold(
-        backgroundColor: crgb(244, 247, 250),
+        backgroundColor: mainColor,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           elevation: 0,

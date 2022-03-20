@@ -106,9 +106,9 @@ class ItemsCardState extends State<ItemsCard> {
           borderRadius: BorderRadius.circular(5.0),
         ),
         child: Card(
+          color: componentColor,
           margin: const EdgeInsets.all(0),
           elevation: 0,
-          color: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5.0),
           ),
@@ -148,7 +148,7 @@ class ItemsCardState extends State<ItemsCard> {
                       child: Container(
                         padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: crgb(253, 250, 249),
+                          color: iconColor,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Icon(
@@ -164,13 +164,13 @@ class ItemsCardState extends State<ItemsCard> {
                       children: [
                         Flexible(
                           child: Text(
-                            widget.name.length > 12
-                                ? widget.name.substring(0, 12) + ".."
+                            widget.name.length > 20
+                                ? widget.name.substring(0, 20) + ".."
                                 : widget.name,
                             style: GoogleFonts.dmSans(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
-                              color: Colors.black,
+                              color: textColor,
                             ),
                           ),
                         ),

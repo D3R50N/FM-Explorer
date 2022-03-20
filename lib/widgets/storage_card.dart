@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, prefer_const_constructors
 
 import 'package:animations/animations.dart';
+import 'package:file_manager_app/contants.dart';
 import 'package:file_manager_app/pages/home.dart';
 import 'package:file_manager_app/pages/internal_storage.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ Widget StorageCard({
         borderRadius: BorderRadius.circular(15.0),
       ),
       elevation: 0,
+      color: componentColor,
       shadowColor: Colors.grey.shade900,
       child: notFound
           ? card_text_button(
@@ -39,6 +41,7 @@ Widget StorageCard({
           : ClipRRect(
               borderRadius: BorderRadius.circular(15),
               child: OpenContainer(
+                closedColor: componentColor,
                 closedElevation: 2,
                 transitionDuration: Duration(milliseconds: 300),
                 closedBuilder: (context, action) {
@@ -90,7 +93,7 @@ class card_text_button extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
         ),
-        color: Colors.white,
+        color: Colors.transparent,
         elevation: 0,
         shadowColor: Colors.grey.shade900,
         child: ClipRRect(
@@ -117,7 +120,7 @@ class card_text_button extends StatelessWidget {
                   title,
                   style: GoogleFonts.dmSans(
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: textColor,
                   ),
                 ),
               ),
@@ -130,7 +133,7 @@ class card_text_button extends StatelessWidget {
                           "stockage introuvable",
                           style: GoogleFonts.dmSans(
                             fontStyle: FontStyle.italic,
-                            color: Colors.black,
+                            color: textColor,
                           ),
                         ),
                       ),

@@ -4,6 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// Color mainColor = crgb(255, 219, 111);
+// Color componentColor = crgb(46, 26, 79);
+// Color textColor = crgb(244, 247, 250);
+// Color iconColor = crgb(253, 250, 249);
+
+Color mainColor = crgb(244, 247, 250);
+Color componentColor = Colors.white;
+Color textColor = Colors.black;
+Color iconColor = crgb(253, 250, 249);
+
 Map<int, Color> color = {
   50: Color.fromRGBO(136, 14, 79, .1),
   100: Color.fromRGBO(136, 14, 79, .2),

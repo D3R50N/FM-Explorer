@@ -275,7 +275,7 @@ class InternalStorageState extends State<InternalStorage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(244, 247, 250, 1),
+      backgroundColor: mainColor,
       appBar: InternalStorageAppBar(),
       body: Column(
         children: [

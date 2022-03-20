@@ -44,7 +44,7 @@ class _HomeState extends State<Home> {
     reqPerm().then((value) => print("fini"));
 
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(244, 247, 250, 1),
+      backgroundColor: mainColor,
       appBar: HomeAppBar(),
       body: !allPathLoaded
           ? Center(

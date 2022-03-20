@@ -52,6 +52,7 @@ class _CategoryPageState extends State<CategoryPage> {
     // });
 
     return Scaffold(
+      backgroundColor: mainColor,
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.transparent,

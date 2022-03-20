@@ -50,7 +50,7 @@ class _SearchPageState extends State<SearchPage> {
     return Hero(
       tag: "search_bar",
       child: Scaffold(
-        backgroundColor: const Color.fromRGBO(244, 247, 250, 1),
+        backgroundColor: mainColor,
         appBar: AppBar(
           backgroundColor: Colors.white,
           shadowColor: Colors.grey.shade300,

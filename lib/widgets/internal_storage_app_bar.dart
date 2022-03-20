@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:file_manager_app/contants.dart';
 import 'package:flutter/material.dart';
 
 class InternalStorageAppBar extends StatelessWidget
@@ -9,7 +10,7 @@ class InternalStorageAppBar extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: componentColor,
       shadowColor: Colors.transparent,
     );
   }

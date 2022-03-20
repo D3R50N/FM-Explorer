@@ -35,6 +35,7 @@ class CategoriesSection extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),
                 ),
+                color: componentColor,
                 child: GridView.count(
                   crossAxisSpacing: 0,
                   shrinkWrap: true,
@@ -112,6 +113,7 @@ Widget category(
     required BuildContext context,
     Color color = const Color.fromRGBO(0, 192, 250, 1)}) {
   return OpenContainer(
+    closedColor: componentColor,
     closedBuilder: (context, action) {
       return Center(
         child: Column(
@@ -119,7 +121,7 @@ Widget category(
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: crgb(253, 250, 249),
+                color: iconColor,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
