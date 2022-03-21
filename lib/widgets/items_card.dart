@@ -66,14 +66,6 @@ class ItemsCardState extends State<ItemsCard> {
   void openFolder(BuildContext context) {
     Navigator.of(context)
         .push(
-          // MaterialPageRoute(
-          //   builder: (context) => InternalStorage(
-          //       main_icondata,
-          //       widget.name,
-          //       main_usedSpace,
-          //       main_freeSpace,
-          //       widget.parentPath + widget.name + "/"),
-          // ),
           PageRouteBuilder(
             reverseTransitionDuration: Duration(milliseconds: 50),
             pageBuilder: (c, a1, a2) => InternalStorage(
@@ -115,10 +107,7 @@ class ItemsCardState extends State<ItemsCard> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(5),
             child: TextButton(
-              // ignore: todo
-              /////////////////////TODO Déclaration de la fonction
               onPressed: () {
-                //  print(" on a " + widget.oneIsSelected.toString());
                 if (isSelected) {
                   deselectItem();
                 } else if (widget.oneIsSelected) {
@@ -165,7 +154,7 @@ class ItemsCardState extends State<ItemsCard> {
                         Flexible(
                           child: Text(
                             widget.name.length > 20
-                                ? widget.name.substring(0, 20) + ".."
+                                ? widget.name.substring(0, 17) + ".."
                                 : widget.name,
                             style: GoogleFonts.dmSans(
                               fontWeight: FontWeight.bold,
