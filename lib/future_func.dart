@@ -1,10 +1,15 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, prefer_const_constructors
 
+import 'dart:async';
 import 'dart:io';
 
+import 'package:file_manager_app/helpers/items_cache.dart';
 import 'package:file_manager_app/pages/home.dart';
 import 'package:file_manager_app/widgets/storage_section.dart';
+import 'package:flutter/material.dart';
 
+int counter = 0;
+Timer? tim;
 Future<List<String>> allPathInDir(String dir) async {
   List<String> allfiles = [dir];
   await reqPerm();
@@ -28,7 +33,9 @@ Future<List<String>> allPathInDir(String dir) async {
   }
   GetStorageItems.sortAll();
   //Pour réduire le nombre de fichiers à charger
-  if (GetStorageItems.length > 100) GetStorageItems.canLoad = false;
+  if (GetStorageItems.length > ItemsCache.itemsLimit) {
+    GetStorageItems.canLoad = false;
+  }
 
   return allfiles;
 }
@@ -36,7 +43,44 @@ Future<List<String>> allPathInDir(String dir) async {
 Future<void> syncAllPath() async {
   List<String> lp = await localPath;
   GetStorageItems.clearAll();
+  GetStorageItems.canLoad = true;
+  bool isShow = false;
 
+  tim = Timer.periodic(
+    const Duration(seconds: 10),
+    (t) {
+      if (!isShow && GetStorageItems.canLoad) {
+        showDialog(
+          context: ItemsCache.context!,
+          builder: (context) {
+            isShow = true;
+            return AlertDialog(
+              title: const Text("Le chargement a trop mis de temps"),
+              content: Text(GetStorageItems.length.toString() +
+                  " éléments chargés. Vous pouvez passer le chargement."),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    isShow = false;
+                    Navigator.of(context).pop();
+                    t.cancel();
+                  },
+                  child: Text("Continuer"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    GetStorageItems.canLoad = false;
+                    Navigator.of(context).pop();
+                  },
+                  child: Text("Passer"),
+                )
+              ],
+            );
+          },
+        );
+      }
+    },
+  );
   await allPathInDir(lp.first);
 }
 

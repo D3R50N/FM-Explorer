@@ -2,6 +2,7 @@
 
 import 'package:file_manager_app/contants.dart';
 import 'package:file_manager_app/future_func.dart';
+import 'package:file_manager_app/helpers/items_cache.dart';
 import 'package:file_manager_app/pages/search_page.dart';
 import 'package:file_manager_app/widgets/recent_section.dart';
 import 'package:file_manager_app/widgets/storage_section.dart';
@@ -33,6 +34,7 @@ class _HomeState extends State<Home> {
     super.initState();
     reqPerm().then((value) {
       syncAllPath().then((value) {
+        GetStorageItems.canLoad = false;
         setState(() {
           allPathLoaded = true;
         });
@@ -42,6 +44,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    ItemsCache.context = context;
     return Scaffold(
       backgroundColor: mainColor,
       appBar: HomeAppBar(),
@@ -53,7 +56,7 @@ class _HomeState extends State<Home> {
                 CircularProgressIndicator(),
                 Gap(10),
                 Text(
-                  "Chargement des données",
+                  "Chargement des données...",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF00C4FE),
