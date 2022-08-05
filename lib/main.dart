@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './pages/home.dart';
 import 'contants.dart';
 
+
 void main() {
   runApp(const MyApp());
 }
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: MaterialColor(0xFF00C4FE, color),
       ),
       home: const Home(),
-      //Home()
+
     );
   }
 }

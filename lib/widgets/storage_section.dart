@@ -10,7 +10,7 @@ import './storage_card.dart';
 
 Future<List<String>> get localPath async {
   var paths = await ExternalPath.getExternalStorageDirectories();
-  // print(paths);
+  print(paths); 
   return paths;
 }
 

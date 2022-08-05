@@ -55,6 +55,7 @@ class _CategoryPageState extends State<CategoryPage> {
         centerTitle: true,
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
+        elevation : 0,
         title: Text(
           "Liste des " +
               widget.title.toLowerCase() +

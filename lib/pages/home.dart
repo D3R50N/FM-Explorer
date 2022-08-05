@@ -15,7 +15,16 @@ import '../widgets/search_bar.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 Future<void> reqPerm() async {
-  await Permission.storage.request();
+  bool storage = await Permission.storage.isGranted;
+  if (!storage) {
+    await Permission.storage.request();
+  }
+
+  bool external = await Permission.manageExternalStorage.isGranted;
+  if (!external) {
+    await Permission.manageExternalStorage.request();
+  }
+  debugPrint(external.toString());
 }
 
 class Home extends StatefulWidget {
@@ -32,12 +41,11 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    reqPerm().then((value) {
-      syncAllPath().then((value) {
-        GetStorageItems.canLoad = false;
-        setState(() {
-          allPathLoaded = true;
-        });
+    syncAllPath().then((value) {
+      GetStorageItems.canLoad = false;
+      debugPrint('aaah');
+      setState(() {
+        allPathLoaded = true;
       });
     });
   }

@@ -78,7 +78,7 @@ class RecentSection extends StatelessWidget {
                     icondata:
                         extAndIcon[fileExt(name)] ?? Icons.file_copy_rounded,
                     parentPath: path,
-                    size: perfectSize(f.lengthSync()),
+                    size: perfectSize(f.lengthSync()??0),
                     lastDate: f.lastAccessedSync().toString().split(" ").first,
                     color: extAndCol[fileExt(name)] ?? crgb(100, 100, 100),
                     name: name,

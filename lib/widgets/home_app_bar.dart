@@ -15,6 +15,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.transparent,
       shadowColor: Colors.transparent,
+      elevation: 0,
       title: Text(
         // "Tous mes Fichiers (" + GetStorageItems.length.toString() + ")",
         "FM Explorer",

@@ -7,12 +7,12 @@ import 'package:file_manager_app/helpers/items_cache.dart';
 import 'package:file_manager_app/pages/home.dart';
 import 'package:file_manager_app/widgets/storage_section.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 int counter = 0;
 Timer? tim;
 Future<List<String>> allPathInDir(String dir) async {
   List<String> allfiles = [dir];
-  await reqPerm();
 
   Directory currDir = Directory(dir);
   if (!currDir.existsSync()) {
@@ -32,6 +32,7 @@ Future<List<String>> allPathInDir(String dir) async {
     addUnique(element, GetStorageItems.getAll);
   }
   GetStorageItems.sortAll();
+
   //Pour réduire le nombre de fichiers à charger
   if (GetStorageItems.length > ItemsCache.itemsLimit) {
     GetStorageItems.canLoad = false;
@@ -41,46 +42,43 @@ Future<List<String>> allPathInDir(String dir) async {
 }
 
 Future<void> syncAllPath() async {
+  await reqPerm();
   List<String> lp = await localPath;
-  GetStorageItems.clearAll();
-  GetStorageItems.canLoad = true;
-  bool isShow = false;
+  // GetStorageItems.clearAll();
 
-  tim = Timer.periodic(
-    const Duration(seconds: 10),
-    (t) {
-      if (!isShow && GetStorageItems.canLoad) {
-        showDialog(
-          context: ItemsCache.context!,
-          builder: (context) {
-            isShow = true;
-            return AlertDialog(
-              title: const Text("Le chargement a trop mis de temps"),
-              content: Text(GetStorageItems.length.toString() +
-                  " éléments chargés. Vous pouvez passer le chargement."),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    isShow = false;
-                    Navigator.of(context).pop();
-                    t.cancel();
-                  },
-                  child: Text("Continuer"),
-                ),
-                TextButton(
-                  onPressed: () {
-                    GetStorageItems.canLoad = false;
-                    Navigator.of(context).pop();
-                  },
-                  child: Text("Passer"),
-                )
-              ],
-            );
-          },
-        );
-      }
-    },
-  );
+  // GetStorageItems.canLoad = true;
+
+  Timer(const Duration(seconds: 10), () {
+    if (GetStorageItems.canLoad) {
+      showDialog(
+        context: ItemsCache.context!,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Le chargement a trop mis de temps"),
+            content: Text(GetStorageItems.length.toString() +
+                " éléments chargés. Vous pouvez passer le chargement."),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  // t.cancel();
+                  syncAllPath();
+                },
+                child: Text("Continuer"),
+              ),
+              TextButton(
+                onPressed: () {
+                  GetStorageItems.canLoad = false;
+                  Navigator.of(context).pop();
+                },
+                child: Text("Passer"),
+              )
+            ],
+          );
+        },
+      );
+    }
+  });
   await allPathInDir(lp.first);
 }
 
