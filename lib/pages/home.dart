@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:async';
+
 import 'package:file_manager_app/contants.dart';
 import 'package:file_manager_app/future_func.dart';
 import 'package:file_manager_app/helpers/items_cache.dart';
@@ -8,6 +10,7 @@ import 'package:file_manager_app/widgets/recent_section.dart';
 import 'package:file_manager_app/widgets/storage_section.dart';
 import 'package:file_manager_app/widgets/home_app_bar.dart';
 import 'package:file_manager_app/widgets/categories_section.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import '../widgets/home_app_bar.dart';
@@ -38,16 +41,22 @@ class _HomeState extends State<Home> {
   _HomeState();
   bool allPathLoaded = false;
 
+  static sync(String message) async {
+    print(message);
+    await syncAllPath();
+  }
+
   @override
   void initState() {
     super.initState();
-    syncAllPath().then((value) {
-      GetStorageItems.canLoad = false;
-      debugPrint('aaah');
-      setState(() {
-        allPathLoaded = true;
-      });
-    });
+    // WidgetsFlutterBinding.ensureInitialized();
+    // compute<String, dynamic>(sync, "Yo").then((value) {
+    //   GetStorageItems.canLoad = false;
+    //   debugPrint('aaah');
+    //   setState(() {
+    //     allPathLoaded = true;
+    //   });
+    // });
   }
 
   @override

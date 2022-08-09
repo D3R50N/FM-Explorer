@@ -15,5 +15,6 @@ class InternalStorageAppBar extends StatelessWidget
     );
   }
 
+  @override
   Size get preferredSize => AppBar().preferredSize;
 }

@@ -44,6 +44,7 @@ Future<List<String>> allPathInDir(String dir) async {
 Future<void> syncAllPath() async {
   await reqPerm();
   List<String> lp = await localPath;
+  print("start");
   // GetStorageItems.clearAll();
 
   // GetStorageItems.canLoad = true;
@@ -53,6 +54,23 @@ Future<void> syncAllPath() async {
       showDialog(
         context: ItemsCache.context!,
         builder: (context) {
+          if (GetStorageItems.oldLength == GetStorageItems.length) {
+            return AlertDialog(
+              title: const Text("Le chargement est terminé"),
+              content: Text(
+                  GetStorageItems.length.toString() + " éléments chargés."),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    GetStorageItems.canLoad = false;
+                    Navigator.of(context).pop();
+                  },
+                  child: Text("OK"),
+                )
+              ],
+            );
+          }
+          GetStorageItems.oldLength = GetStorageItems.length;
           return AlertDialog(
             title: const Text("Le chargement a trop mis de temps"),
             content: Text(GetStorageItems.length.toString() +
@@ -87,6 +105,7 @@ class GetStorageItems {
   static List<String> getAllFiles = [];
   static List<String> getAllFolders = [];
   static bool canLoad = true;
+  static int oldLength = 0;
 
   static get length {
     return getAll.length;
