@@ -95,6 +95,8 @@ class _StorageSectionState extends State<StorageSection> {
           padding: const EdgeInsets.only(left: 10),
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+
             child: Row(
               children: [
                 StorageCard(

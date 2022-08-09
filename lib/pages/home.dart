@@ -10,7 +10,6 @@ import 'package:file_manager_app/widgets/recent_section.dart';
 import 'package:file_manager_app/widgets/storage_section.dart';
 import 'package:file_manager_app/widgets/home_app_bar.dart';
 import 'package:file_manager_app/widgets/categories_section.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import '../widgets/home_app_bar.dart';
@@ -23,11 +22,11 @@ Future<void> reqPerm() async {
     await Permission.storage.request();
   }
 
-  bool external = await Permission.manageExternalStorage.isGranted;
-  if (!external) {
-    await Permission.manageExternalStorage.request();
-  }
-  debugPrint(external.toString());
+    // bool external = await Permission.manageExternalStorage.isGranted;
+    // if (!external) {
+    //   await Permission.manageExternalStorage.request();
+    // }
+  
 }
 
 class Home extends StatefulWidget {
@@ -41,22 +40,16 @@ class _HomeState extends State<Home> {
   _HomeState();
   bool allPathLoaded = false;
 
-  static sync(String message) async {
-    print(message);
-    await syncAllPath();
-  }
-
   @override
   void initState() {
     super.initState();
     // WidgetsFlutterBinding.ensureInitialized();
-    // compute<String, dynamic>(sync, "Yo").then((value) {
-    //   GetStorageItems.canLoad = false;
-    //   debugPrint('aaah');
-    //   setState(() {
-    //     allPathLoaded = true;
-    //   });
-    // });
+    syncAllPath().then((value) {
+      GetStorageItems.canLoad = false;
+      setState(() {
+        allPathLoaded = true;
+      });
+    });
   }
 
   @override
@@ -82,6 +75,7 @@ class _HomeState extends State<Home> {
               ],
             ))
           : SingleChildScrollView(
+            physics : BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

@@ -297,6 +297,8 @@ class InternalStorageState extends State<InternalStorage> {
           (isItemsLoaded && allItems.isNotEmpty)
               ? Expanded(
                   child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+
                     child: Column(
                       children: itemsList,
                     ),

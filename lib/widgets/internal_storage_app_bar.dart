@@ -12,6 +12,7 @@ class InternalStorageAppBar extends StatelessWidget
     return AppBar(
       backgroundColor: componentColor,
       shadowColor: Colors.transparent,
+      elevation: 1,
     );
   }
 
